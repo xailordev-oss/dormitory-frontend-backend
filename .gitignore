@@ -1,0 +1,18 @@
+node_modules/
+dist/
+uploads/*
+!uploads/.gitkeep
+!uploads/rooms/.gitkeep
+!uploads/buildings/.gitkeep
+!uploads/students/.gitkeep
+
+# ⚠️ .env ມີ JWT secret ແລະ ລະຫັດ DB — ຫ້າມ commit ເດັດຂາດ
+.env
+.env.local
+.env.*.local
+
+*.log
+npm-debug.log*
+.DS_Store
+.vscode/
+.idea/

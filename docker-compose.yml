@@ -1,0 +1,46 @@
+# ໃຊ້: docker compose up -d --build
+# ຕ້ອງມີໄຟລ໌ .env (ສຳເນົາຈາກ .env.example) ທີ່ຕັ້ງ JWT_SECRET, JWT_REFRESH_SECRET, DB_PASSWORD, DB_NAME
+# ຖານຂໍ້ມູນຖືກສ້າງ/ຍົກລະດັບອັດຕະໂນມັດຕອນ app ເລີ່ມ (node dist/scripts/migrate.js)
+# ສ້າງ admin ຄົນທຳອິດ:
+#   docker compose exec app node dist/scripts/create-admin.js --email admin@example.com --password "ລະຫັດ" --name Admin
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?ຕ້ອງຕັ້ງ DB_PASSWORD ໃນ .env}
+      MYSQL_DATABASE: ${DB_NAME:-dormitory_db}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_NAME: ${DB_NAME:-dormitory_db}
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads_data:/app/uploads
+
+volumes:
+  mysql_data:
+  uploads_data:

@@ -1,0 +1,112 @@
+### ຕິດຕັ້ງ extension "REST Client" ໃນ VS Code ແລ້ວກົດ Send Request ທີລະ block ຈາກເທິງລົງລຸ່ມ
+### ຕ້ອງມີ admin ກ່ອນ: npm run create-admin -- --email admin@example.com --password "Admin12345"
+### (ມີ automated test ຄົບກວ່າແລ້ວ: npm test)
+
+@baseUrl = http://localhost:3000/api
+@adminEmail = admin@example.com
+@adminPassword = Admin12345
+@stuEmail = stu-{{$timestamp}}@example.com
+
+### 1) Admin login
+# @name adminLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "email": "{{adminEmail}}", "password": "{{adminPassword}}" }
+
+###
+@adminToken = {{adminLogin.response.body.accessToken}}
+
+### 2) Dashboard
+GET {{baseUrl}}/reports/dashboard
+Authorization: Bearer {{adminToken}}
+
+### 3) ສ້າງຕຶກ
+# @name building
+POST {{baseUrl}}/buildings
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "name": "ຕຶກ {{$timestamp}}", "address": "ວຽງຈັນ", "totalFloors": 4 }
+
+###
+@buildingId = {{building.response.body.data.id}}
+
+### 4) ສ້າງຫ້ອງ
+# @name room
+POST {{baseUrl}}/rooms
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "roomNumber": "A{{$randomInt 100 999}}", "buildingId": {{buildingId}}, "capacity": 2, "price": 500000 }
+
+###
+@roomId = {{room.response.body.data.id}}
+
+### 5) ນັກສຶກສາສະໝັກ (ລະບົບສ້າງຂໍ້ມູນນັກສຶກສາໃຫ້ອັດຕະໂນມັດ)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{ "name": "Test Student", "email": "{{stuEmail}}", "password": "pass1234" }
+
+### 6) ນັກສຶກສາ login
+# @name stuLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "email": "{{stuEmail}}", "password": "pass1234" }
+
+###
+@stuToken = {{stuLogin.response.body.accessToken}}
+
+### 7) ນັກສຶກສາຈອງຫ້ອງ (ສະຖານະ pending)
+# @name booking
+POST {{baseUrl}}/bookings
+Authorization: Bearer {{stuToken}}
+Content-Type: application/json
+
+{ "roomId": {{roomId}}, "checkInDate": "2026-10-01" }
+
+###
+@bookingId = {{booking.response.body.data.id}}
+
+### 8) Admin ອະນຸມັດ
+PATCH {{baseUrl}}/bookings/{{bookingId}}/approve
+Authorization: Bearer {{adminToken}}
+
+### 9) ອອກບິນລາຍເດືອນ (ເບິ່ງຕົວຢ່າງ dryRun ກ່ອນ)
+POST {{baseUrl}}/payments/generate-monthly
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "month": "2026-10", "dueDay": 5, "dryRun": true }
+
+### 10) ອອກບິນຈິງ
+POST {{baseUrl}}/payments/generate-monthly
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "month": "2026-10", "dueDay": 5 }
+
+### 11) ນັກສຶກສາເບິ່ງບິນຂອງຕົນ
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{stuToken}}
+
+### 12) ລາຍການຊຳລະທັງໝົດ (admin/staff)
+# @name pays
+GET {{baseUrl}}/payments?status=pending&limit=5
+Authorization: Bearer {{adminToken}}
+
+###
+@paymentId = {{pays.response.body.data[0].id}}
+
+### 13) ຮັບຊຳລະ → ໄດ້ເລກໃບຮັບເງິນ
+PUT {{baseUrl}}/payments/{{paymentId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "status": "paid", "method": "cash" }
+
+### 14) ໃບຮັບເງິນ
+GET {{baseUrl}}/payments/{{paymentId}}/receipt
+Authorization: Bearer {{adminToken}}

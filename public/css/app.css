@@ -1,0 +1,196 @@
+/* ລະບົບຈັດການຫໍພັກ — ສີ: ນ້ຳເງິນເຂັ້ມ (ໂຄງ) + ຟ້າຄາມ (ຫຼັກ) + ເຫຼືອງອຳພັນ (ຕ້ອງລະວັງ) */
+:root {
+  --ink: #17324d;
+  --ink-soft: #244a6d;
+  --paper: #f3f6f9;
+  --surface: #ffffff;
+  --line: #d9e1e9;
+  --text: #1b2733;
+  --muted: #5a6b7b;
+  --brand: #0d7a85;
+  --brand-dark: #095d66;
+  --brand-tint: #e2f3f4;
+  --amber: #b87400;
+  --amber-tint: #fdf0d2;
+  --danger: #c23b3b;
+  --danger-tint: #fbe6e6;
+  --ok: #26804f;
+  --ok-tint: #e0f3e8;
+  --font: "Noto Sans Lao", "Phetsarath OT", "Saysettha OT", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html { font-size: 16px; }
+body { margin: 0; font-family: var(--font); color: var(--text); background: var(--paper); line-height: 1.6; }
+a { color: var(--brand-dark); }
+h1, h2, h3 { line-height: 1.3; margin: 0; }
+h1 { font-size: 1.6rem; font-weight: 700; }
+h2 { font-size: 1.15rem; font-weight: 700; }
+h3 { font-size: 1rem; font-weight: 600; }
+:focus-visible { outline: 3px solid #f0b429; outline-offset: 2px; }
+.muted { color: var(--muted); }
+.small { font-size: .875rem; }
+.right { text-align: right; }
+.num { font-variant-numeric: tabular-nums; }
+.sr { position: absolute; left: -9999px; }
+
+/* ---------- ໂຄງໜ້າ ---------- */
+.shell { display: grid; grid-template-columns: 236px 1fr; min-height: 100vh; }
+.side { background: var(--ink); color: #dbe6f1; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 8px; color: #fff; font-weight: 700; font-size: 1.1rem; }
+.brand-mark { width: 34px; height: 34px; border-radius: 8px; background: var(--brand); display: grid; place-items: center; font-weight: 700; font-size: .95rem; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav a { color: #cbd9e8; text-decoration: none; padding: 9px 12px; border-radius: 8px; font-size: .95rem; display: flex; justify-content: space-between; align-items: center; }
+.nav a:hover { background: var(--ink-soft); color: #fff; }
+.nav a.on { background: var(--brand); color: #fff; font-weight: 600; }
+.nav .sep { height: 1px; background: #ffffff22; margin: 8px 6px; }
+.nav .dot { background: var(--amber); color: #fff; border-radius: 99px; font-size: .72rem; padding: 0 7px; font-weight: 700; }
+.me { margin-top: auto; border-top: 1px solid #ffffff22; padding: 14px 8px 0; font-size: .875rem; }
+.me b { display: block; color: #fff; }
+.me button { margin-top: 8px; }
+.main { padding: 26px 32px 60px; min-width: 0; max-width: 1240px; width: 100%; }
+.topbar { display: none; }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+.page-head p { margin: 4px 0 0; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* ---------- ປຸ່ມ / ຟອມ ---------- */
+.btn { font: inherit; font-size: .92rem; font-weight: 600; border: 1px solid transparent; border-radius: 8px; padding: 8px 16px; cursor: pointer; background: var(--brand); color: #fff; text-decoration: none; display: inline-block; line-height: 1.4; }
+.btn:hover { background: var(--brand-dark); }
+.btn:disabled { opacity: .55; cursor: wait; }
+.btn.ghost { background: transparent; color: var(--brand-dark); border-color: var(--line); }
+.btn.ghost:hover { background: var(--brand-tint); }
+.btn.danger { background: var(--danger); }
+.btn.danger:hover { background: #a02e2e; }
+.btn.warn { background: var(--amber); }
+.btn.sm { padding: 4px 10px; font-size: .82rem; }
+.side .btn.ghost { color: #dbe6f1; border-color: #ffffff33; }
+.side .btn.ghost:hover { background: var(--ink-soft); }
+label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: 4px; }
+input, select, textarea { font: inherit; width: 100%; padding: 8px 10px; border: 1px solid #b9c6d3; border-radius: 8px; background: #fff; color: var(--text); }
+input[type=checkbox] { width: auto; }
+input:focus, select:focus, textarea:focus { border-color: var(--brand); outline: 2px solid var(--brand-tint); }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.field { margin-bottom: 14px; }
+.field .hint { font-size: .8rem; color: var(--muted); margin-top: 3px; }
+.form-error { color: var(--danger); background: var(--danger-tint); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: .9rem; }
+.form-error:empty { display: none; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px; }
+.filters > div { min-width: 150px; }
+.check { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 0; padding-bottom: 8px; }
+
+/* ---------- ຕົວເລກສະຫຼຸບ ---------- */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); margin-bottom: 26px; }
+.stat { padding: 16px 18px; border-right: 1px solid var(--line); text-decoration: none; color: inherit; display: block; }
+.stat:last-child { border-right: 0; }
+a.stat:hover { background: var(--brand-tint); }
+.stat b { display: block; font-size: 1.65rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: .86rem; }
+.stat.warn b { color: var(--amber); }
+.stat.bad b { color: var(--danger); }
+.stat.good b { color: var(--ok); }
+
+/* ---------- ຕາຕະລາງ ---------- */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th { text-align: left; font-weight: 600; color: var(--muted); background: #f7f9fb; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 14px; border-bottom: 1px solid #edf1f5; vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fafcfd; }
+td .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.empty { padding: 36px 20px; text-align: center; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; }
+.pager { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: .9rem; color: var(--muted); }
+.pager a, .pager span.disabled { padding: 5px 14px; border: 1px solid var(--line); border-radius: 8px; text-decoration: none; background: var(--surface); }
+.pager span.disabled { opacity: .45; }
+
+/* ---------- ປ້າຍສະຖານະ ---------- */
+.badge { display: inline-block; padding: 1px 10px; border-radius: 99px; font-size: .8rem; font-weight: 600; background: #e8edf2; color: #38495a; white-space: nowrap; }
+.badge.ok { background: var(--ok-tint); color: var(--ok); }
+.badge.warn { background: var(--amber-tint); color: var(--amber); }
+.badge.bad { background: var(--danger-tint); color: var(--danger); }
+.badge.info { background: var(--brand-tint); color: var(--brand-dark); }
+
+/* ---------- ຫ້ອງພັກ: ເລກຫ້ອງເປັນພະເອກ, ຈຸດ = ບ່ອນນອນ ---------- */
+.rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.room { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--brand); border-radius: 10px; padding: 14px 16px 14px; display: flex; flex-direction: column; gap: 4px; }
+.room.st-occupied { border-left-color: var(--muted); }
+.room.st-maintenance { border-left-color: var(--amber); }
+.room-no { font-size: 2.1rem; font-weight: 700; line-height: 1.1; letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+.room-meta { color: var(--muted); font-size: .86rem; }
+.beds { display: flex; gap: 6px; margin: 8px 0 2px; }
+.bed { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--brand); background: transparent; }
+.bed.filled { background: var(--brand); }
+.st-occupied .bed { border-color: var(--muted); }
+.st-occupied .bed.filled { background: var(--muted); }
+.st-maintenance .bed { border-color: var(--amber); }
+.st-maintenance .bed.filled { background: var(--amber); }
+.room-price { font-weight: 600; font-variant-numeric: tabular-nums; }
+.room .actions { margin-top: 10px; }
+
+/* ---------- ໃບແຈ້ງໜີ້ ---------- */
+.doc { border: 1px solid var(--line); border-radius: 8px; padding: 22px 26px; background: #fff; }
+.doc h2 { margin-bottom: 2px; }
+.doc dl { display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; margin: 16px 0; }
+.doc dt { color: var(--muted); }
+.doc dd { margin: 0; }
+.doc .total { font-size: 1.5rem; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-top: 10px; display: flex; justify-content: space-between; }
+
+/* ---------- ໜ້າເຂົ້າສູ່ລະບົບ ---------- */
+.auth { min-height: 100vh; display: grid; grid-template-columns: minmax(300px, 1fr) minmax(320px, 460px); }
+.auth-art { background: var(--ink); color: #fff; padding: 48px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.auth-art h1 { font-size: 2.2rem; }
+.auth-art p { color: #b9cde0; max-width: 34ch; margin: 0; }
+.auth-art .rooms-demo { display: flex; gap: 12px; margin-top: 10px; }
+.auth-art .key { border: 2px solid #ffffff55; border-radius: 10px; padding: 10px 16px; font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.auth-art .key small { display: flex; gap: 4px; margin-top: 4px; }
+.auth-art .key i { width: 9px; height: 9px; border-radius: 50%; border: 2px solid #7fd0d8; display: inline-block; }
+.auth-art .key i.f { background: #7fd0d8; }
+.auth-form { padding: 48px 40px; display: flex; flex-direction: column; justify-content: center; background: var(--surface); }
+.auth-form form { display: block; }
+.auth-form .links { display: flex; justify-content: space-between; margin-top: 16px; font-size: .9rem; }
+
+/* ---------- Modal / Toast ---------- */
+.overlay { position: fixed; inset: 0; background: #0b1a2a99; display: grid; place-items: start center; padding: 6vh 16px; overflow-y: auto; z-index: 50; }
+.modal { background: var(--surface); border-radius: 12px; width: min(620px, 100%); padding: 22px 24px; box-shadow: 0 20px 60px #0007; }
+.modal.wide { width: min(860px, 100%); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.modal-head button { border: 0; background: none; font-size: 1.6rem; cursor: pointer; color: var(--muted); line-height: 1; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+#toasts { position: fixed; right: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 8px; z-index: 80; }
+.toast { background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 8px; max-width: 360px; box-shadow: 0 6px 20px #0004; }
+.toast.error { background: var(--danger); }
+.toast.ok { background: var(--ok); }
+.loading { padding: 48px; text-align: center; color: var(--muted); }
+.notice { background: var(--amber-tint); border: 1px solid #f0d18a; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+.notice.info { background: var(--brand-tint); border-color: #a9dadd; }
+.section { margin-bottom: 30px; }
+.section > h2 { margin-bottom: 10px; }
+.bar { height: 10px; background: #e5ebf1; border-radius: 99px; overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--brand); }
+.list-plain { list-style: none; padding: 0; margin: 0; }
+.list-plain li { padding: 10px 0; border-bottom: 1px solid #edf1f5; }
+.list-plain li:last-child { border-bottom: 0; }
+.unread { border-left: 4px solid var(--amber); padding-left: 12px; }
+.avatar { width: 84px; height: 84px; border-radius: 50%; background: var(--brand-tint); color: var(--brand-dark); display: grid; place-items: center; font-size: 2rem; font-weight: 700; object-fit: cover; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+
+/* ---------- ມືຖື ---------- */
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { position: fixed; z-index: 40; left: 0; top: 0; width: 260px; transform: translateX(-100%); transition: transform .18s; }
+  .side.open { transform: none; }
+  .topbar { display: flex; align-items: center; gap: 12px; background: var(--ink); color: #fff; padding: 10px 16px; position: sticky; top: 0; z-index: 30; }
+  .topbar button { background: none; border: 1px solid #ffffff44; color: #fff; border-radius: 8px; font-size: 1.2rem; padding: 2px 10px; cursor: pointer; }
+  .main { padding: 18px 14px 50px; }
+  .auth { grid-template-columns: 1fr; }
+  .auth-art { padding: 28px; }
+  .auth-art h1 { font-size: 1.7rem; }
+  .auth-form { padding: 28px 22px; }
+  .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+@media print {
+  body * { visibility: hidden; }
+  .doc, .doc * { visibility: visible; }
+  .doc { position: absolute; left: 0; top: 0; width: 100%; border: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
