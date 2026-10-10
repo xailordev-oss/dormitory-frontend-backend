@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans Lao", "Phetsarath OT", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #eef6ff;
+  --color-brand-100: #d9eaff;
+  --color-brand-200: #bcdaff;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+}
+
+html,
+body {
+  background: #f5f7fb;
+  color: #0f172a;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.animate-in { animation: pop-in 0.15s ease-out; }
+
+@keyframes ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-12deg); }
+  60% { transform: rotate(8deg); }
+  80% { transform: rotate(-4deg); }
+}
+.bell-ring { animation: ring 0.8s ease-in-out; transform-origin: top center; }
+
+/* ໜ້າໃບແຈ້ງໜີ້/ໃບຮັບເງິນ: ພິມສະເພາະເອກະສານ */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  .print-area { box-shadow: none !important; border: 0 !important; }
+  .app-root { padding-left: 0 !important; }
+  [data-sonner-toaster] { display: none !important; }
+}
+
+/* ສະໄລ້ໂຊ: ຮູບຂະຫຍາຍຊ້າໆ + ແຖບນັບເວລາ */
+@keyframes slide-drift {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1); }
+}
+.slide-drift { animation: slide-drift linear forwards; }
+
+@keyframes slide-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.slide-progress { animation: slide-progress linear forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-drift { animation: none; }
+}
